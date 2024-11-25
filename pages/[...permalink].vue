@@ -16,7 +16,7 @@ const pageFilter = computed(() => {
 
 	if (path === '/') {
 		finalPath = '/';
-	} else if (path.endsWith('/')) {
+	} else if (path?.endsWith('/')) {
 		finalPath = path.slice(0, -1);
 	} else {
 		finalPath = path;

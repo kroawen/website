@@ -1,4 +1,4 @@
-import { authentication, createDirectus, rest } from '@directus/sdk';
+import { authentication, createDirectus, rest, staticToken } from '@directus/sdk';
 import Queue from 'p-queue';
 
 import type { Schema } from '~/types/schema';
@@ -22,6 +22,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 			fetch: (...args) => queue.add(() => fetchRetry(0, ...args)),
 		},
 	})
+		.with(staticToken('_62qR5qHgTsk8ZboF7baGTzWZWTUDaoj'))
 		.with(rest())
 		.with(authentication());
 

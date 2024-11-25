@@ -42,6 +42,7 @@ export default [
 			'no-debugger': 'error',
 			'prettier/prettier': 'error',
 
+			'vue/no-v-html': 'off',
 			'padding-line-between-statements': [
 				'error',
 				{

@@ -5,12 +5,17 @@ const {
 	public: { tvUrl, baseUrl },
 } = useRuntimeConfig();
 
-const directus = createDirectus(tvUrl).with(rest()).with(realtime()).with(authentication());
+const directus = createDirectus(tvUrl)
+	.with(staticToken('_62qR5qHgTsk8ZboF7baGTzWZWTUDaoj'))
+	.with(rest())
+	.with(realtime())
+	.with(authentication());
+
 const live = await directus.request(readSingleton('live'));
 const globals = await directus.request(readSingleton('globals', { fields: ['realtime_public_user_token'] }));
 
 const shows = await directus.request(
-	readItems('shows', {
+	readItems('app', {
 		filter: { id: { _in: live.offline_featured } },
 	}),
 );

@@ -23,7 +23,7 @@ export default defineNuxtConfig({
 	},
 
 	site: {
-		url: 'https://directus.io',
+		url: 'http://127.0.0.1:3001',
 	},
 
 	app: {

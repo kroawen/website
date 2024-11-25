@@ -72,6 +72,7 @@ export interface Schema {
 
 	// Content
 	forms: Form[];
+	app: any[];
 	resources: Resource[];
 	resources_blocks: ResourceBlock[];
 	resources_resources: ResourcesResources[];

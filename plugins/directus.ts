@@ -1,4 +1,13 @@
-import { aggregate, authentication, createDirectus, readItem, readItems, readSingleton, rest } from '@directus/sdk';
+import {
+	aggregate,
+	authentication,
+	createDirectus,
+	readItem,
+	readItems,
+	readSingleton,
+	rest,
+	staticToken,
+} from '@directus/sdk';
 import type { RestClient } from '@directus/sdk';
 import Queue from 'p-queue';
 
@@ -23,6 +32,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 			fetch: (...args) => queue.add(() => fetchRetry(0, ...args)),
 		},
 	})
+		.with(staticToken('_62qR5qHgTsk8ZboF7baGTzWZWTUDaoj'))
 		.with(rest())
 		.with(authentication());
 

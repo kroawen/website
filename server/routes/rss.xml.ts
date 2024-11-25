@@ -1,4 +1,4 @@
-import { createDirectus, readItems, rest } from '@directus/sdk';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
 import { Feed } from 'feed';
 import { micromark } from 'micromark';
 import { gfm, gfmHtml } from 'micromark-extension-gfm';
@@ -39,48 +39,17 @@ export default defineEventHandler(async (event) => {
 		public: { directusUrl, tvUrl },
 	} = useRuntimeConfig();
 
-	const directus = createDirectus<Schema>(directusUrl as string).with(rest());
+	const directus = createDirectus<Schema>(directusUrl as string)
+		.with(staticToken('_62qR5qHgTsk8ZboF7baGTzWZWTUDaoj'))
+		.with(rest());
+
 	const directusTv = createDirectus(tvUrl as string).with(rest());
 
-	const posts = await directus.request(
-		readItems('resources', {
-			fields: [
-				'image',
-				'title',
-				'summary',
-				'slug',
-				'category',
-				'date_published',
-				{ author: ['image', 'name', 'slug'] },
-				{ type: ['slug'] },
-			],
-			limit: 20,
-			sort: ['-date_published'],
-		}),
-	);
+	const posts = await directus.request(readItems('app'));
 
-	const devBlogPosts = await directus.request(
-		readItems('developer_articles', {
-			fields: [
-				'image',
-				'title',
-				'summary',
-				'content',
-				'slug',
-				'date_published',
-				{ author: ['first_name', 'last_name', 'avatar'] },
-			],
-			limit: 20,
-			sort: ['-date_published'],
-			filter: {
-				status: { _eq: 'published' },
-			},
-		}),
-	);
+	const devBlogPosts = await directus.request(readItems('app'));
 
-	const episodes = await directusTv.request(
-		readItems('episodes', { fields: ['*', { season: ['*', { show: ['slug'] }] }], limit: -1 }),
-	);
+	const episodes = await directusTv.request(readItems('app', { fields: ['*'], limit: -1 }));
 
 	for (const post of posts as Resource[]) {
 		const type = post.type as ContentType;

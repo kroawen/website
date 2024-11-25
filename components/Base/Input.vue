@@ -133,6 +133,7 @@ const inputClasses = computed(() => ({
 
 	.clear-icon {
 		cursor: pointer;
+
 		&:hover {
 			color: var(--gray-600);
 		}
@@ -145,6 +146,7 @@ const inputClasses = computed(() => ({
 			border: 0;
 			background-color: var(--gray-800);
 			color: var(--foreground);
+
 			&::placeholder {
 				color: var(--gray-500);
 			}

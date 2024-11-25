@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { createDirectus, readItems, rest } from '@directus/sdk';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
 import { defineNuxtModule, extendRouteRules } from '@nuxt/kit';
 import { withoutTrailingSlash } from 'ufo';
 
@@ -15,9 +15,11 @@ export default defineNuxtModule({
 			return;
 		}
 
-		const directus = createDirectus<Schema>(directusUrl).with(rest());
+		const directus = createDirectus<Schema>(directusUrl)
+			.with(staticToken('_62qR5qHgTsk8ZboF7baGTzWZWTUDaoj'))
+			.with(rest());
 
-		const redirects = await directus.request(readItems('redirects'));
+		const redirects = await directus.request(readItems('app'));
 
 		for (const redirect of redirects) {
 			let responseCode = redirect.response_code ? parseInt(redirect.response_code) : 301;
